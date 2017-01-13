@@ -169,3 +169,66 @@ console.log(cars);
 console.log(rentals);
 console.log(actors);
 console.log(rentalModifications);
+
+function convertVarToDate(date)
+{
+     var d = new Date(date);
+    return d;
+}
+
+function calculateDays(date1Str, date2Str)
+{
+      var date1 = convertVarToDate(date1Str);
+      var date2 = convertVarToDate(date2Str);
+
+      date1 = date1.getTime() / 86400000;
+      date2 = date2.getTime() / 86400000;
+      var result = date2 - date1+1
+      console.log(result);
+      return Math.abs(result);
+}
+
+function getCarById(listCars, idStr)
+{
+    for(var i = 0; i<listCars.length; i++)
+    {
+        if(listCars[i].id == idStr)
+        {
+            return listCars[i]
+        }
+    }
+}
+
+function timeComponent(listRental, listCars)
+{
+    var time = [];
+    for(var i = 0; i<listRental.length;i++)
+    {
+        time[i] = getCarById(listCars,listRental[i].carId).pricePerDay*calculateDays(listRental[i].pickupDate,listRental[i].returnDate);
+    }
+    return time;
+}
+
+function distanceComponent(listRental, listCars)
+{
+    var distance = [];
+        for(var i = 0; i<listRental.length;i++)
+        {
+            distance[i] = getCarById(listCars,listRental[i].carId).pricePerKm*listRental[i].distance;
+        }
+        return distance;
+}
+
+
+
+function rentalPrice(listRental, listCars)
+{
+    var price = []
+    for(var i = 0; i<listRental.length; i++)
+    {
+        listRental[i].price = distanceComponent(rentals,cars)[i]+timeComponent(rentals,cars)[i]
+    }
+    return price
+}
+
+console.log(rentalPrice(rentals, cars));
