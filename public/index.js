@@ -184,7 +184,6 @@ function calculateDays(date1Str, date2Str)
       date1 = date1.getTime() / 86400000;
       date2 = date2.getTime() / 86400000;
       var result = date2 - date1+1
-      console.log(result);
       return Math.abs(result);
 }
 
@@ -221,14 +220,49 @@ function distanceComponent(listRental, listCars)
 
 
 
-function rentalPrice(listRental, listCars)
+function updateRentalPrice(listRental, listCars)
 {
-    var price = []
     for(var i = 0; i<listRental.length; i++)
     {
         listRental[i].price = distanceComponent(rentals,cars)[i]+timeComponent(rentals,cars)[i]
     }
-    return price
 }
 
-console.log(rentalPrice(rentals, cars));
+// EXERCICE 2
+
+function rentalPriceDiscount(listRental,listCars)
+{
+    for(var i =0; i<listRental.length; i++)
+    {
+        var days = calculateDays(listRental[i].pickupDate,listRental[i].returnDate)
+
+        if(days<5)
+        {
+            listRental[i].price -= listRental[i].price*10/100
+        }
+        else if(days<11)
+        {
+            listRental[i].price -= listRental[i].price*0.3
+        }
+        else
+        {
+            listRental[i].price -= listRental[i].price*0.5
+        }
+    }
+}
+
+function updateComission(listRental,listCars)
+{
+    var comission = 0
+    for(var i =0; i<listRental.length; i++)
+    {
+        comission = listRental[i].price*0.3
+        console.log(comission)
+        listRental[i].insurance = comission/2
+        listRental[i].assistance = calculateDays(listRental[i].pickupDate,listRental[i].returnDate)
+        listRental[i].drivy = comission - listRental[i].insurance - listRental[i].assistance
+    }
+}
+
+updateRentalPrice(rentals,cars)
+console.log(rentalPriceDiscount(rentals, cars))
