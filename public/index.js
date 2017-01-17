@@ -266,5 +266,16 @@ function updateComission(listRental,listCars)
     }
 }
 
+function UpdatePriceDeductibleOption(listRental){
+  var days = calculateDays(listRental[i].pickupDate,listRental[i].returnDate
+  for(var i =0; i<listRental.length; i++)
+      {
+          if(listRental[i].options.deductibleReduction){
+                listRental[i].price +=4*days;
+                listRental[i].commission.drivy+=4*days
+            }
+      }
+}
+
 updateRentalPrice(rentals,cars)
 console.log(rentalPriceDiscount(rentals, cars))
