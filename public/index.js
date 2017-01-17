@@ -251,18 +251,6 @@ function rentalPriceDiscount(listRental,listCars)
     }
 }
 
-function updateComission(listRental,listCars)
-{
-    var comission = 0
-    for(var i =0; i<listRental.length; i++)
-    {
-        comission = listRental[i].price*0.3
-        console.log(comission)
-        listRental[i].insurance = comission/2
-        listRental[i].assistance = calculateDays(listRental[i].pickupDate,listRental[i].returnDate)
-        listRental[i].drivy = comission - listRental[i].insurance - listRental[i].assistance
-    }
-}
 
 updateRentalPrice(rentals,cars)
 console.log(rentalPriceDiscount(rentals, cars))
