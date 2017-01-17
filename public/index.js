@@ -277,5 +277,35 @@ function UpdatePriceDeductibleOption(listRental){
       }
 }
 
-updateRentalPrice(rentals,cars)
-console.log(rentalPriceDiscount(rentals, cars))
+function getCommission(rental)
+{
+    return rental.commission.assistance - rental.commission.insurance -rental.commission.drivy
+}
+
+function calculateOwnerAmount(rental){
+  return rental.price - getCommission(rental)
+}
+
+function fillActor(actor, listRental){
+  var rental;
+  for(var i =0; i<listRental.length; i++)
+  {
+    if(actor.rentalId == listRental[i].id)
+    {
+        rental = listRental[i]
+    }
+  }
+  actor.payment.driver.amount=rental.price;
+  actor.payment.owner.amount=computeOwnerAmount(rental);
+  actor.payment.insurance.amount=rental.commission.insurance;
+  actor.payment.assistance.amount=rental.commission.assistance;
+  actor.payment.drivy.amount=rental.commission.drivy;
+  return actor;
+}
+
+function updateActors(listActor)
+{
+    for(var i=0;i<listActor.length;i++){
+        listActor[i]=fillActor(listActor[i]);
+    }
+}
